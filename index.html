@@ -1,0 +1,315 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Kortline · Giriş</title>
+<meta name="description" content="Kortline giriş ekranı tasarım önizlemesi">
+<meta name="theme-color" content="#0B1622">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@800&family=Instrument+Sans:wght@400;500;600&display=swap">
+<link rel="preload" as="image" href="img/kort-arka.webp">
+<link rel="preload" as="image" href="img/kort-oyuncu.webp">
+<style>
+:root{
+  --zemin:#0B1622; --yuzey:#132233; --metin:#EEF2F5; --ikincil:#9DB0C2;
+  --vurgu:#D9F24A; --hata:#FF8577; --kenar:#5B7694;
+  --baslik:'Big Shoulders Display',system-ui,sans-serif;
+  --govde:'Instrument Sans',system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--zemin);color:var(--metin);font-family:var(--govde);-webkit-font-smoothing:antialiased}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* sayfa ve sahne */
+.page{position:relative;height:100vh;height:100dvh;min-height:680px;overflow:hidden}
+.stage{position:absolute;left:50%;top:50%;width:max(100%,calc(max(100vh,680px)*1600/995));aspect-ratio:1600/995;transform:translate(-50%,-50%)}
+.stage img,.stage svg{position:absolute;display:block}
+.bg{inset:0;width:100%;height:100%;filter:brightness(.8) saturate(.95)}
+.player{left:33.125%;top:6.432%;width:30.6875%;height:87.035%}
+.layer{inset:0;width:100%;height:100%;pointer-events:none}
+.shade-r{position:absolute;inset:0;background:linear-gradient(90deg,rgba(11,22,34,0) 60%,rgba(11,22,34,.72) 100%)}
+.shade-bl{position:absolute;left:0;bottom:0;width:640px;height:300px;background:radial-gradient(ellipse at 0% 100%,rgba(5,11,18,.85) 0%,rgba(5,11,18,.45) 42%,rgba(5,11,18,0) 72%)}
+.mobile-only{display:none}
+
+/* analiz notları */
+.lbl{font-family:var(--govde);font-size:13px;font-weight:600;letter-spacing:.06em;fill:var(--ikincil)}
+.val{font-family:var(--baslik);font-weight:800;font-size:30px;fill:var(--metin)}
+
+/* slogan */
+.slogan{position:absolute;left:64px;bottom:64px;max-width:420px}
+.slogan h2{margin:0;font-family:var(--baslik);font-weight:800;font-size:56px;line-height:.98;letter-spacing:.005em}
+.slogan h2 span{color:var(--vurgu)}
+.slogan p{margin:16px 0 0;font-size:15px;line-height:1.5;color:var(--ikincil)}
+
+/* giriş kartı */
+.card{position:absolute;right:48px;top:50%;transform:translateY(-50%);width:440px;padding:40px;background:var(--yuzey);border:1px solid rgba(238,242,245,.07);border-radius:3px;box-shadow:0 30px 80px rgba(0,0,0,.45)}
+.card-top{display:flex;justify-content:space-between;align-items:center;gap:16px}
+.logo{display:flex;align-items:center;gap:10px;font-family:var(--baslik);font-weight:800;font-size:27px;line-height:1;letter-spacing:.01em}
+.lang-wrap{position:relative}
+.lang-wrap svg{position:absolute;pointer-events:none}
+.lang-wrap .globe{left:12px;top:14px}
+.lang-wrap .chev{right:12px;top:15px}
+.lang{appearance:none;-webkit-appearance:none;height:44px;padding:0 34px 0 36px;background:transparent;border:1px solid var(--kenar);border-radius:3px;color:var(--metin);font:inherit;font-size:14px;cursor:pointer}
+.lang option{background:var(--yuzey);color:var(--metin)}
+.card h1{margin:52px 0 0;font-family:var(--baslik);font-weight:800;font-size:46px;line-height:1;letter-spacing:.005em}
+form{display:flex;flex-direction:column;gap:20px;margin-top:32px}
+.field{display:flex;flex-direction:column;gap:8px}
+.field label{font-size:14px;font-weight:500}
+.in{width:100%;height:48px;padding:0 14px;background:var(--zemin);border:1px solid var(--kenar);border-radius:3px;color:var(--metin);font:inherit;font-size:16px;outline:none;transition:border-color .15s ease,box-shadow .15s ease}
+.in:hover{border-color:#7A93AE}
+.in:focus{border-color:var(--vurgu);box-shadow:0 0 0 3px rgba(217,242,74,.2)}
+.pw{position:relative}
+.pw .in{padding-right:52px}
+.eye{position:absolute;right:2px;top:2px;width:44px;height:44px;border:0;border-radius:3px;background:transparent;color:var(--ikincil);display:flex;align-items:center;justify-content:center;cursor:pointer}
+.eye:hover{color:var(--metin)}
+.btn{height:52px;margin-top:8px;border:0;border-radius:3px;background:var(--vurgu);color:var(--zemin);font:inherit;font-size:16px;font-weight:600;letter-spacing:.01em;cursor:pointer;transition:background-color .15s ease,transform .1s ease}
+.btn:hover{background:#E5F97A}
+.btn:active{transform:scale(.99)}
+.btn:focus-visible,.eye:focus-visible,.lang:focus-visible{outline:2px solid var(--vurgu);outline-offset:2px}
+.note-sso{display:flex;gap:10px;align-items:flex-start;margin-top:28px;padding-top:20px;border-top:1px solid rgba(238,242,245,.09)}
+.note-sso svg{flex:none;margin-top:2px}
+.note-sso p{margin:0;font-size:13px;line-height:1.55;color:var(--ikincil)}
+
+/* canlandırma: temel durum = son kare; keyframes yalnız başlangıcı tanımlar */
+.scene{animation:sceneIn 1.1s cubic-bezier(.2,.7,.2,1) both;transform-origin:42% 50%}
+@keyframes sceneIn{from{opacity:0;transform:scale(1.04)}}
+.player{animation:fadeIn .7s ease-out .35s both}
+.j{transform-box:fill-box;transform-origin:center;animation:jIn .32s cubic-bezier(.3,1.5,.5,1) both}
+@keyframes jIn{from{opacity:0;transform:scale(.2)}}
+.ping{transform-box:fill-box;transform-origin:center;opacity:0;animation:ping .7s ease-out both}
+@keyframes ping{from{opacity:.9;transform:scale(.6)}to{opacity:0;transform:scale(2.6)}}
+.bone{stroke-dasharray:1;stroke-dashoffset:0;animation:draw .38s cubic-bezier(.4,0,.2,1) both}
+@keyframes draw{from{stroke-dashoffset:1}}
+.fade{animation:fadeIn .4s ease-out both}
+@keyframes fadeIn{from{opacity:0}}
+.note{animation:noteIn .45s cubic-bezier(.2,.7,.2,1) both}
+@keyframes noteIn{from{opacity:0;transform:translateY(10px)}}
+.d1{animation-delay:1.00s}.d2{animation-delay:1.07s}.d3{animation-delay:1.14s}.d4{animation-delay:1.21s}
+.d5{animation-delay:1.28s}.d6{animation-delay:1.35s}.d7{animation-delay:1.42s}.d8{animation-delay:1.49s}
+.d9{animation-delay:1.56s}.d10{animation-delay:1.63s}.d11{animation-delay:1.70s}.d12{animation-delay:1.77s}
+.b1{animation-delay:1.80s}.b2{animation-delay:1.86s}.b3{animation-delay:1.92s}.b4{animation-delay:1.98s}
+.b5{animation-delay:2.04s}.b6{animation-delay:2.10s}.b7{animation-delay:2.16s}.b8{animation-delay:2.22s}
+.b9{animation-delay:2.28s}.b10{animation-delay:2.34s}.b11{animation-delay:2.40s}.b12{animation-delay:2.46s}
+.rk{animation-delay:2.50s}
+.p1{animation-delay:2.60s;animation-duration:.4s}.p2{animation-delay:2.95s;animation-duration:.65s}
+.n1{animation-delay:3.30s}.n2{animation-delay:3.55s}.n3{animation-delay:3.80s}
+.ui{animation:fadeIn .6s ease-out .25s both}
+@media (prefers-reduced-motion: reduce){
+  .scene,.player,.j,.bone,.fade,.note,.ui{animation:none !important}
+  .ping{animation:none !important;opacity:0}
+}
+
+/* dizüstü */
+@media (max-width:1400px){
+  .card{right:40px;width:400px;padding:34px 36px}
+  .card h1{margin-top:40px;font-size:42px}
+  .slogan{left:48px;bottom:48px;max-width:380px}
+  .slogan h2{font-size:48px}
+}
+
+/* telefon: üstte kısa görsel şeridi, altında kart; notlar ve top yolu gizli */
+@media (max-width:760px){
+  .page{height:auto;min-height:0;overflow:visible;display:flex;flex-direction:column;padding-bottom:28px}
+  .strip{position:relative;height:62vw;overflow:hidden;flex:none}
+  .stage{left:-40vw;top:-6.67vw;width:177.8vw;transform:none}
+  .desktop-only,.shade-r,.shade-bl{display:none}
+  .mobile-only{display:block}
+  .strip-fade{position:absolute;left:0;right:0;bottom:0;height:90px;background:linear-gradient(180deg,rgba(11,22,34,0),var(--zemin))}
+  .card{position:relative;right:auto;top:auto;transform:none;width:auto;margin:-20px 16px 0;padding:22px 20px;box-shadow:none}
+  .logo{font-size:24px;gap:9px}
+  .logo svg{width:26px;height:26px}
+  .card h1{margin-top:22px;font-size:34px}
+  form{gap:16px;margin-top:20px}
+  .note-sso{margin-top:18px;padding-top:14px}
+  .slogan{position:static;order:3;max-width:none;padding:18px 20px 0}
+  .slogan h2{font-size:24px;line-height:1}
+  .slogan p{margin-top:6px;font-size:12px}
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+<div class="strip">
+<div class="stage">
+<div class="scene" style="position:absolute;inset:0">
+<img class="bg" src="img/kort-arka.webp" alt="" width="1600" height="995">
+<img class="player" src="img/kort-oyuncu.webp" alt="" width="491" height="866">
+</div>
+
+<!-- analiz katmanı: masaüstü -->
+<svg class="layer desktop-only" viewBox="0 0 1600 995" aria-hidden="true">
+<defs>
+<mask id="mIn" maskUnits="userSpaceOnUse" x="0" y="0" width="1600" height="995"><path class="bone p1" pathLength="1" d="M648,196 L662,98" fill="none" stroke="#fff" stroke-width="16"/></mask>
+<mask id="mOut" maskUnits="userSpaceOnUse" x="0" y="0" width="1600" height="995"><path class="bone p2" pathLength="1" d="M676,74 C770,30 835,300 850,636" fill="none" stroke="#fff" stroke-width="16"/></mask>
+</defs>
+<g mask="url(#mIn)"><path d="M648,196 L662,98" fill="none" stroke="#EEF2F5" stroke-opacity=".85" stroke-width="2" stroke-dasharray="7 7"/></g>
+<g mask="url(#mOut)"><path d="M676,74 C770,30 835,300 850,636" fill="none" stroke="#D9F24A" stroke-width="2.2" stroke-dasharray="7 7"/></g>
+<g class="fade" style="animation-delay:3.5s">
+<ellipse cx="830" cy="642" rx="24" ry="3.2" fill="none" stroke="#EEF2F5" stroke-opacity=".8" stroke-width="1.2"/>
+<ellipse cx="830" cy="642" rx="48" ry="5.4" fill="none" stroke="#EEF2F5" stroke-opacity=".5" stroke-width="1.2"/>
+<circle cx="850" cy="642" r="4" fill="#D9F24A"/>
+</g>
+<g style="filter:drop-shadow(0 0 5px rgba(217,242,74,.45))">
+<g fill="none" stroke="#D9F24A" stroke-width="3.4" stroke-linecap="round">
+<path class="bone b1" pathLength="1" d="M593,391 L648,424"/>
+<path class="bone b2" pathLength="1" d="M593,391 L631,287"/>
+<path class="bone b3" pathLength="1" d="M631,287 L644,208"/>
+<path class="bone b4" pathLength="1" d="M648,424 L734,463"/>
+<path class="bone b5" pathLength="1" d="M734,463 L823,470"/>
+<path class="bone b6" pathLength="1" d="M593,391 L590,600"/>
+<path class="bone b7" pathLength="1" d="M648,424 L638,606"/>
+<path class="bone b8" pathLength="1" d="M590,600 L638,606"/>
+<path class="bone b9" pathLength="1" d="M590,600 L636,734"/>
+<path class="bone b10" pathLength="1" d="M636,734 L567,865"/>
+<path class="bone b11" pathLength="1" d="M638,606 L716,735"/>
+<path class="bone b12" pathLength="1" d="M716,735 L645,876"/>
+</g>
+<g class="fade rk" fill="none" stroke="#D9F24A">
+<line x1="842" y1="490" x2="902" y2="524" stroke-width="2" stroke-opacity=".7" stroke-dasharray="3 5"/>
+<ellipse cx="962" cy="560" rx="64" ry="42" transform="rotate(38 962 560)" stroke-width="1.8"/>
+</g>
+<circle class="fade rk" cx="665" cy="80" r="22" fill="none" stroke="#D9F24A" stroke-width="1.8"/>
+<g fill="none" stroke="#D9F24A" stroke-width="2">
+<circle class="ping d1" cx="593" cy="391" r="7"/><circle class="ping d2" cx="648" cy="424" r="7"/>
+<circle class="ping d3" cx="631" cy="287" r="7"/><circle class="ping d4" cx="734" cy="463" r="7"/>
+<circle class="ping d5" cx="644" cy="208" r="7"/><circle class="ping d6" cx="823" cy="470" r="7"/>
+<circle class="ping d7" cx="590" cy="600" r="7"/><circle class="ping d8" cx="638" cy="606" r="7"/>
+<circle class="ping d9" cx="636" cy="734" r="7"/><circle class="ping d10" cx="716" cy="735" r="7"/>
+<circle class="ping d11" cx="567" cy="865" r="7"/><circle class="ping d12" cx="645" cy="876" r="7"/>
+</g>
+<g fill="#0B1622" stroke="#D9F24A" stroke-width="2.6">
+<circle class="j d1" cx="593" cy="391" r="6.5"/><circle class="j d2" cx="648" cy="424" r="6.5"/>
+<circle class="j d3" cx="631" cy="287" r="6.5"/><circle class="j d4" cx="734" cy="463" r="6.5"/>
+<circle class="j d5" cx="644" cy="208" r="6.5"/><circle class="j d6" cx="823" cy="470" r="6.5"/>
+<circle class="j d7" cx="590" cy="600" r="6.5"/><circle class="j d8" cx="638" cy="606" r="6.5"/>
+<circle class="j d9" cx="636" cy="734" r="6.5"/><circle class="j d10" cx="716" cy="735" r="6.5"/>
+<circle class="j d11" cx="567" cy="865" r="6.5"/><circle class="j d12" cx="645" cy="876" r="6.5"/>
+</g>
+<g fill="#D9F24A">
+<circle class="j d1" cx="593" cy="391" r="2.4"/><circle class="j d2" cx="648" cy="424" r="2.4"/>
+<circle class="j d3" cx="631" cy="287" r="2.4"/><circle class="j d4" cx="734" cy="463" r="2.4"/>
+<circle class="j d5" cx="644" cy="208" r="2.4"/><circle class="j d6" cx="823" cy="470" r="2.4"/>
+<circle class="j d7" cx="590" cy="600" r="2.4"/><circle class="j d8" cx="638" cy="606" r="2.4"/>
+<circle class="j d9" cx="636" cy="734" r="2.4"/><circle class="j d10" cx="716" cy="735" r="2.4"/>
+<circle class="j d11" cx="567" cy="865" r="2.4"/><circle class="j d12" cx="645" cy="876" r="2.4"/>
+</g>
+</g>
+<g class="note n1">
+<g fill="none" stroke="#EEF2F5" stroke-opacity=".6" stroke-width="1.2" stroke-dasharray="4 5"><line x1="550" y1="365" x2="700" y2="455"/><line x1="548" y1="595" x2="684" y2="612"/></g>
+<line x1="580" y1="500" x2="490" y2="500" stroke="#EEF2F5" stroke-opacity=".75" stroke-width="1"/>
+<circle cx="582" cy="500" r="3.4" fill="#D9F24A"/>
+<rect x="330" y="470" width="160" height="60" rx="3" fill="#0B1622" fill-opacity=".86" stroke="#EEF2F5" stroke-opacity=".16"/>
+<text class="lbl" x="344" y="491">OMUZ–KALÇA</text>
+<text class="val" x="344" y="520">38°</text>
+</g>
+<g class="note n2">
+<line x1="948" y1="517" x2="950" y2="470" stroke="#EEF2F5" stroke-opacity=".75" stroke-width="1"/>
+<circle cx="948" cy="519" r="3.4" fill="#D9F24A"/>
+<rect x="872" y="410" width="178" height="60" rx="3" fill="#0B1622" fill-opacity=".86" stroke="#EEF2F5" stroke-opacity=".16"/>
+<text class="lbl" x="886" y="431">RAKET BAŞI HIZI</text>
+<text class="val" x="886" y="460">141 km/sa</text>
+</g>
+<g class="note n3">
+<line x1="850" y1="648" x2="850" y2="690" stroke="#EEF2F5" stroke-opacity=".75" stroke-width="1"/>
+<rect x="760" y="690" width="182" height="60" rx="3" fill="#0B1622" fill-opacity=".86" stroke="#EEF2F5" stroke-opacity=".16"/>
+<text class="lbl" x="774" y="711" style="letter-spacing:.03em">TOPUN DÜŞTÜĞÜ YER</text>
+<text class="val" x="774" y="740">merkeze 0,4 m</text>
+</g>
+</svg>
+
+<!-- analiz katmanı: telefon (yalnız iskelet, raket ve top) -->
+<svg class="layer mobile-only" viewBox="0 0 1600 995" aria-hidden="true">
+<g style="filter:drop-shadow(0 0 4px rgba(217,242,74,.45))">
+<g fill="none" stroke="#D9F24A" stroke-width="6" stroke-linecap="round">
+<path class="bone b1" pathLength="1" d="M593,391 L648,424"/>
+<path class="bone b2" pathLength="1" d="M593,391 L631,287"/>
+<path class="bone b3" pathLength="1" d="M631,287 L644,208"/>
+<path class="bone b4" pathLength="1" d="M648,424 L734,463"/>
+<path class="bone b5" pathLength="1" d="M734,463 L823,470"/>
+<path class="bone b6" pathLength="1" d="M593,391 L590,600"/>
+<path class="bone b7" pathLength="1" d="M648,424 L638,606"/>
+<path class="bone b8" pathLength="1" d="M590,600 L638,606"/>
+<path class="bone b9" pathLength="1" d="M590,600 L636,734"/>
+<path class="bone b11" pathLength="1" d="M638,606 L716,735"/>
+</g>
+<g class="fade rk" fill="none" stroke="#D9F24A" stroke-width="3">
+<ellipse cx="962" cy="560" rx="64" ry="42" transform="rotate(38 962 560)"/>
+<circle cx="665" cy="80" r="24"/>
+</g>
+<g fill="#0B1622" stroke="#D9F24A" stroke-width="4.2">
+<circle class="j d1" cx="593" cy="391" r="10"/><circle class="j d2" cx="648" cy="424" r="10"/>
+<circle class="j d3" cx="631" cy="287" r="10"/><circle class="j d4" cx="734" cy="463" r="10"/>
+<circle class="j d5" cx="644" cy="208" r="10"/><circle class="j d6" cx="823" cy="470" r="10"/>
+<circle class="j d7" cx="590" cy="600" r="10"/><circle class="j d8" cx="638" cy="606" r="10"/>
+<circle class="j d9" cx="636" cy="734" r="10"/><circle class="j d10" cx="716" cy="735" r="10"/>
+</g>
+</g>
+</svg>
+</div>
+<div class="shade-r"></div>
+<div class="shade-bl"></div>
+<div class="strip-fade mobile-only"></div>
+</div>
+
+<div class="slogan ui">
+<h2>Kortun kenarından <span>analize.</span></h2>
+<p>Türkiye Tenis Federasyonu · video analizi</p>
+</div>
+
+<main class="card ui">
+<div class="card-top">
+<div class="logo">
+<svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><circle cx="15" cy="15" r="14" fill="#D9F24A"/><path d="M4.5 7.5c4.6 3.6 4.6 11.4 0 15M25.5 7.5c-4.6 3.6-4.6 11.4 0 15" fill="none" stroke="#0B1622" stroke-width="2" stroke-linecap="round"/></svg>
+Kortline
+</div>
+<div class="lang-wrap">
+<label for="dil" class="sr">Dil</label>
+<svg class="globe" width="16" height="16" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="#9DB0C2" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 3.8 5.6 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.6-3.8-9S9.5 5.6 12 3z"/></svg>
+<select id="dil" class="lang"><option>Türkçe</option><option>English</option></select>
+<svg class="chev" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="#9DB0C2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+</div>
+</div>
+
+<h1>Federasyon hesabınla gir</h1>
+
+<form id="giris" novalidate>
+<div class="field">
+<label for="username">Kullanıcı adı</label>
+<input id="username" name="username" type="text" autocomplete="username" autocapitalize="none" class="in">
+</div>
+<div class="field">
+<label for="password">Parola</label>
+<div class="pw">
+<input id="password" name="password" type="password" autocomplete="current-password" class="in">
+<button type="button" class="eye" id="goz" aria-label="Parolayı göster" aria-pressed="false">
+<svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>
+</button>
+</div>
+</div>
+<button type="submit" class="btn">Giriş yap</button>
+</form>
+
+<div class="note-sso">
+<svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="#9DB0C2" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10.5" width="16" height="10.5" rx="2"/><path d="M8 10.5V7a4 4 0 0 1 8 0v3.5"/></svg>
+<p>Giriş, federasyonun ortak kimlik sunucusunda yapılır; parolan Kortline'a gelmez.</p>
+</div>
+</main>
+
+</div>
+<script>
+// tasarım önizlemesi: form hiçbir yere gönderilmez
+document.getElementById('giris').addEventListener('submit', function (e) { e.preventDefault(); });
+var goz = document.getElementById('goz'), pw = document.getElementById('password');
+goz.addEventListener('click', function () {
+  var acik = pw.type === 'password';
+  pw.type = acik ? 'text' : 'password';
+  goz.setAttribute('aria-pressed', String(acik));
+  goz.setAttribute('aria-label', acik ? 'Parolayı gizle' : 'Parolayı göster');
+});
+</script>
+</body>
+</html>
