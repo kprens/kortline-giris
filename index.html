@@ -32,7 +32,7 @@ html,body{margin:0;background:var(--zemin);color:var(--metin);font-family:var(--
 .layer{inset:0;width:100%;height:100%;pointer-events:none}
 .shade-r{position:absolute;inset:0;background:linear-gradient(90deg,rgba(11,22,34,0) 60%,rgba(11,22,34,.72) 100%)}
 .shade-bl{position:absolute;left:0;bottom:0;width:640px;height:300px;background:radial-gradient(ellipse at 0% 100%,rgba(5,11,18,.85) 0%,rgba(5,11,18,.45) 42%,rgba(5,11,18,0) 72%)}
-.mobile-only{display:none}
+.mobile-only,.stage .mobile-only{display:none}
 
 /* analiz notları */
 .lbl{font-family:var(--govde);font-size:13px;font-weight:600;letter-spacing:.06em;fill:var(--ikincil)}
@@ -114,9 +114,9 @@ form{display:flex;flex-direction:column;gap:20px;margin-top:32px}
 @media (max-width:760px){
   .page{height:auto;min-height:0;overflow:visible;display:flex;flex-direction:column;padding-bottom:28px}
   .strip{position:relative;height:62vw;overflow:hidden;flex:none}
-  .stage{left:-40vw;top:-6.67vw;width:177.8vw;transform:none}
-  .desktop-only,.shade-r,.shade-bl{display:none}
-  .mobile-only{display:block}
+  .stage{left:-40vw;top:-3vw;width:177.8vw;transform:none}
+  .stage .desktop-only,.shade-r,.shade-bl{display:none}
+  .mobile-only,.stage .mobile-only{display:block}
   .strip-fade{position:absolute;left:0;right:0;bottom:0;height:90px;background:linear-gradient(180deg,rgba(11,22,34,0),var(--zemin))}
   .card{position:relative;right:auto;top:auto;transform:none;width:auto;margin:-20px 16px 0;padding:22px 20px;box-shadow:none}
   .logo{font-size:24px;gap:9px}
